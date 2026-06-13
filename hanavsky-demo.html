@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline'; frame-ancestors 'none';">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Hanavský Pavilon</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #120E07;
+    --bg2:      #1E1710;
+    --bg3:      #2A2016;
+    --bronze:   #B8853A;
+    --gold:     #E2B96A;
+    --cream:    #F0E8D5;
+    --muted:    #9A8F7A;
+    --line:     rgba(184,133,58,0.25);
+
+    --px: clamp(20px, 5vw, 80px);
+    --section-py: clamp(60px, 8vw, 120px);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px var(--px);
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(18,14,7,0.95) 0%, transparent 100%);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 500; letter-spacing: 0.12em;
+    color: var(--cream); text-decoration: none; text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--cream); }
+  .nav-cta {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); text-decoration: none;
+    border: 0.5px solid var(--bronze); padding: 9px 22px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-cta:hover { background: var(--bronze); color: var(--bg); }
+
+  /* HERO */
+  .hero {
+    position: relative; height: 100vh; min-height: 640px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 60%, rgba(184,133,58,0.08) 0%, transparent 65%),
+      radial-gradient(ellipse at 20% 80%, rgba(184,133,58,0.05) 0%, transparent 50%);
+  }
+  /* Silhouette of Prague skyline */
+  .hero-skyline {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 220px; opacity: 0.18;
+  }
+  .year-watermark {
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(160px, 22vw, 280px);
+    font-weight: 300; line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 0.5px rgba(184,133,58,0.2);
+    letter-spacing: -0.02em;
+    pointer-events: none; user-select: none;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    white-space: nowrap;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center; padding: 0 24px;
+  }
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--bronze); margin-bottom: 24px;
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: ''; display: block;
+    width: 40px; height: 0.5px; background: var(--bronze); opacity: 0.6;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 300; line-height: 0.95;
+    letter-spacing: -0.01em;
+    color: var(--cream); margin-bottom: 8px;
+  }
+  .hero-title em {
+    font-style: italic; color: var(--gold);
+  }
+  .hero-subtitle {
+    font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); margin-top: 20px; margin-bottom: 40px;
+  }
+  .hero-cta {
+    display: inline-block;
+    background: var(--bronze);
+    color: var(--bg);
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 14px 40px; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .hero-cta:hover { background: var(--gold); }
+  .hero-scroll {
+    position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+  }
+  .scroll-line {
+    width: 1px; height: 40px; background: var(--bronze); opacity: 0.5;
+    animation: scrollpulse 2s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes scrollpulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.7); transform-origin: top; }
+      50% { opacity: 0.7; transform: scaleY(1); }
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-line { animation: none; opacity: 0.5; }
+  }
+
+  /* ORNAMENT DIVIDER */
+  .divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 20px; padding: 0 48px;
+  }
+  .divider-line { flex: 1; height: 0.5px; background: var(--line); }
+  .divider-ornament {
+    font-size: 14px; color: var(--bronze); opacity: 0.7;
+    line-height: 1;
+  }
+
+  /* ABOUT */
+  .about {
+    padding: var(--section-py) var(--px);
+    max-width: 900px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 80px);
+    align-items: center;
+  }
+  .about-label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--bronze); margin-bottom: 20px;
+  }
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px); font-weight: 300; line-height: 1.1;
+    color: var(--cream); margin-bottom: 24px;
+  }
+  .about-heading em { font-style: italic; color: var(--gold); }
+  .about-body { font-size: 14px; line-height: 1.8; color: var(--muted); }
+  .about-stats {
+    display: flex; flex-direction: column; gap: 32px;
+  }
+  .stat { border-left: 0.5px solid var(--bronze); padding-left: 24px; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px; font-weight: 300; line-height: 1;
+    color: var(--gold);
+  }
+  .stat-label { font-size: 11px; letter-spacing: 0.1em; color: var(--muted); margin-top: 6px; }
+
+  /* MENU SECTION */
+  .menu-section {
+    padding: var(--section-py) var(--px);
+    background: var(--bg2);
+  }
+  .section-heading {
+    text-align: center; margin-bottom: 60px;
+  }
+  .section-heading .label {
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--bronze); display: block; margin-bottom: 16px;
+  }
+  .section-heading h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 56px); font-weight: 300;
+    color: var(--cream); line-height: 1.1;
+  }
+  .menu-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--line);
+    max-width: 900px; margin: 0 auto;
+    border: 0.5px solid var(--line);
+  }
+  .menu-item {
+    background: var(--bg2);
+    padding: 36px 32px;
+    transition: background 0.2s;
+  }
+  .menu-item:hover { background: var(--bg3); }
+  .menu-item-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 400; color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .menu-item-desc { font-size: 12px; line-height: 1.7; color: var(--muted); margin-bottom: 20px; }
+  .menu-item-price {
+    font-size: 13px; color: var(--gold); letter-spacing: 0.05em;
+  }
+
+  /* GALLERY */
+  .gallery-section { padding: var(--section-py) var(--px); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 200px 200px;
+    gap: 6px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .gallery-item {
+    background: var(--bg3);
+    overflow: hidden; position: relative;
+  }
+  .gallery-item:nth-child(1) { grid-column: span 5; grid-row: span 2; }
+  .gallery-item:nth-child(2) { grid-column: span 4; }
+  .gallery-item:nth-child(3) { grid-column: span 3; }
+  .gallery-item:nth-child(4) { grid-column: span 3; }
+  .gallery-item:nth-child(5) { grid-column: span 4; }
+  .gallery-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 8px;
+  }
+  .gallery-icon { font-size: 24px; opacity: 0.3; }
+  .gallery-caption {
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); opacity: 0.5;
+  }
+  /* Simulated photo overlays */
+  .gallery-item:nth-child(1) .gallery-placeholder { background: linear-gradient(135deg, #1E1A10 0%, #2E2410 100%); }
+  .gallery-item:nth-child(2) .gallery-placeholder { background: linear-gradient(135deg, #1A1E16 0%, #222B1C 100%); }
+  .gallery-item:nth-child(3) .gallery-placeholder { background: linear-gradient(135deg, #1E1410 0%, #2A1C12 100%); }
+  .gallery-item:nth-child(4) .gallery-placeholder { background: linear-gradient(135deg, #12161E 0%, #1A2028 100%); }
+  .gallery-item:nth-child(5) .gallery-placeholder { background: linear-gradient(135deg, #1E1A14 0%, #2C2018 100%); }
+  /* Fake photo content for mockup feel */
+  .photo-sim {
+    width: 100%; height: 100%; position: relative; overflow: hidden;
+  }
+  .photo-sim::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: inherit;
+  }
+  .photo-label {
+    position: absolute; bottom: 12px; left: 14px;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(240,232,213,0.5);
+  }
+
+  /* RESERVATION */
+  .reservation {
+    padding: var(--section-py) var(--px);
+    background: var(--bg2);
+    text-align: center;
+  }
+  .reservation h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 64px); font-weight: 300;
+    color: var(--cream); margin-bottom: 16px;
+  }
+  .reservation h2 em { font-style: italic; color: var(--gold); }
+  .reservation-sub { font-size: 13px; color: var(--muted); margin-bottom: 48px; letter-spacing: 0.05em; }
+  .reservation-form {
+    display: flex; gap: 0;
+    max-width: 560px; margin: 0 auto 24px;
+  }
+  .res-input {
+    flex: 1; background: transparent;
+    border: 0.5px solid var(--bronze); border-right: none;
+    color: var(--cream); padding: 14px 20px;
+    font-family: 'Inter', sans-serif; font-size: 13px;
+    outline: none;
+  }
+  .res-input:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+  .res-input::placeholder { color: var(--muted); }
+  .res-input:focus { border-color: var(--gold); }
+  .res-btn {
+    background: var(--bronze); border: 0.5px solid var(--bronze);
+    color: var(--bg); padding: 14px 28px;
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 500;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .res-btn:hover { background: var(--gold); border-color: var(--gold); }
+  .reservation-phone {
+    font-size: 13px; color: var(--muted); letter-spacing: 0.05em;
+  }
+  .reservation-phone a { color: var(--bronze); text-decoration: none; }
+  .reservation-phone a:hover { color: var(--gold); }
+
+  /* FOOTER */
+  footer {
+    padding: 48px;
+    border-top: 0.5px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .footer-copy { font-size: 11px; color: var(--muted); opacity: 0.5; letter-spacing: 0.05em; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a {
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  .footer-links a:hover { opacity: 1; }
+
+  /* OPENING HOURS BADGE */
+  .hours-badge {
+    position: fixed; bottom: 32px; right: 32px; z-index: 50;
+    background: var(--bg2); border: 0.5px solid var(--bronze);
+    padding: 14px 20px;
+    font-size: 11px; letter-spacing: 0.08em;
+    color: var(--muted);
+    pointer-events: none;
+  }
+  .hours-badge strong { color: var(--gold); display: block; font-weight: 400; font-size: 13px; margin-bottom: 2px; }
+
+  /* HAMBURGER */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 4px;
+  }
+  .nav-hamburger span {
+    display: block; width: 22px; height: 0.5px;
+    background: var(--cream); transition: transform 0.3s, opacity 0.3s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+  /* MOBILE MENU OVERLAY */
+  .mobile-menu {
+    display: none;
+    position: fixed; inset: 0; z-index: 90;
+    background: rgba(18,14,7,0.97);
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 36px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--cream); }
+  .mobile-menu .mobile-cta {
+    color: var(--gold); border: 0.5px solid var(--bronze); padding: 12px 32px;
+    margin-top: 8px;
+  }
+
+  /* ── TABLET (600–1024px) ── */
+  @media (max-width: 1024px) {
+    .menu-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .gallery-grid {
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: 200px 200px;
+    }
+    .gallery-item:nth-child(1) { grid-column: span 3; grid-row: span 2; }
+    .gallery-item:nth-child(2) { grid-column: span 3; }
+    .gallery-item:nth-child(3) { grid-column: span 2; }
+    .gallery-item:nth-child(4) { grid-column: span 2; }
+    .gallery-item:nth-child(5) { grid-column: span 2; }
+  }
+
+  /* ── MOBILE (≤600px) ── */
+  @media (max-width: 600px) {
+    .nav-links, .nav-cta { display: none; }
+    .nav-hamburger { display: flex; }
+
+    .hero-scroll { display: none; }
+
+    .about { grid-template-columns: 1fr; }
+    .about-stats { flex-direction: row; flex-wrap: wrap; gap: 20px; }
+    .stat { flex: 1 1 120px; }
+
+    .menu-grid { grid-template-columns: 1fr; }
+
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+    }
+    .gallery-item { grid-column: span 1 !important; grid-row: span 1 !important; height: 160px; }
+
+    .reservation-form { flex-direction: column; }
+    .res-input { border-right: 0.5px solid var(--bronze); border-bottom: none; }
+
+    footer { flex-direction: column; gap: 20px; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+
+    .hours-badge { display: none; }
+
+    .divider { padding-left: 0; padding-right: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Hanavský Pavilon</a>
+  <ul class="nav-links">
+    <li><a href="#about">O nás</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Galerie</a></li>
+    <li><a href="#contact">Kontakt</a></li>
+  </ul>
+  <a href="#reservation" class="nav-cta">Rezervace</a>
+  <button class="nav-hamburger" id="hamburger" aria-label="Otevřít navigaci" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" class="mobile-link">O nás</a>
+  <a href="#menu" class="mobile-link">Menu</a>
+  <a href="#gallery" class="mobile-link">Galerie</a>
+  <a href="#contact" class="mobile-link">Kontakt</a>
+  <a href="#reservation" class="mobile-link mobile-cta">Rezervace</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+
+  <!-- Prague skyline SVG silhouette -->
+  <svg class="hero-skyline" viewBox="0 0 1440 220" preserveAspectRatio="none" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 220 L0 140 L40 140 L40 120 L55 120 L55 100 L65 80 L75 100 L75 120 L90 120 L90 130 L110 130 L110 110 L125 90 L125 70 L130 60 L135 70 L135 90 L135 110 L155 110 L155 120 L170 120 L170 105 L185 105 L185 95 L195 85 L205 95 L205 105 L220 105 L220 115 L250 115 L250 100 L260 100 L260 85 L268 75 L276 85 L276 100 L300 100 L300 110 L320 110 L320 95 L335 80 L335 60 L340 50 L345 60 L345 80 L345 95 L380 95 L380 105 L410 105 L410 90 L425 75 L425 60 L432 50 L439 60 L439 75 L439 90 L480 90 L480 100 L510 100 L510 112 L540 112 L540 95 L555 80 L555 62 L562 52 L569 62 L569 80 L569 95 L610 95 L610 105 L640 105 L640 90 L655 75 L660 65 L665 75 L665 90 L700 90 L700 108 L730 108 L730 118 L760 118 L760 100 L775 85 L775 68 L782 58 L789 68 L789 85 L789 100 L830 100 L830 112 L860 112 L860 95 L875 80 L875 62 L880 52 L885 62 L885 80 L885 95 L920 95 L920 108 L950 108 L950 118 L980 118 L980 100 L995 85 L1000 72 L1005 85 L1005 100 L1040 100 L1040 112 L1070 112 L1070 122 L1100 122 L1100 108 L1115 95 L1120 80 L1125 95 L1125 108 L1160 108 L1160 118 L1200 118 L1200 130 L1230 130 L1230 118 L1250 118 L1250 105 L1265 92 L1270 82 L1275 92 L1275 105 L1310 105 L1310 118 L1360 118 L1360 130 L1400 130 L1400 140 L1440 140 L1440 220 Z" fill="#B8853A"/>
+  </svg>
+
+  <div class="year-watermark">1891</div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Letenské sady, Praha 7</div>
+    <h1 class="hero-title">
+      Hanavský<br><em>Pavilon</em>
+    </h1>
+    <p class="hero-subtitle">Restaurace s výhledem na Prahu · Od roku 1891</p>
+    <a href="#reservation" class="hero-cta">Rezervovat stůl</a>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Dolů
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider" style="padding: 48px 48px 0;">
+  <div class="divider-line"></div>
+  <div class="divider-ornament">✦</div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div>
+    <div class="about-label">Historie místa</div>
+    <h2 class="about-heading">Nad<br>střechami <em>Prahy</em></h2>
+    <p class="about-body">
+      Pavilon byl postaven v roce 1891 pro Jubilejní zemskou výstavu.
+      Dnes je to restaurace s jedinečnou celoroční terasou a panoramatickým
+      výhledem na celé historické centrum Prahy — jedno z nejkrásnějších míst
+      ve městě.
+    </p>
+  </div>
+  <div class="about-stats">
+    <div class="stat">
+      <div class="stat-num">1891</div>
+      <div class="stat-label">Rok založení</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">Míst na terase</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">360°</div>
+      <div class="stat-label">Výhled na Prahu</div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-ornament">✦</div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="section-heading">
+    <span class="label">Sezónní menu</span>
+    <h2>Chutě <em style="font-style:italic; color:var(--gold);">léta</em></h2>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-item">
+      <div class="menu-item-name">Kachní confit</div>
+      <div class="menu-item-desc">S bramborovým gratinem, karamelizovanou hruškou a omáčkou z červeného vína</div>
+      <div class="menu-item-price">395 Kč</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-name">Hovězí tatarák</div>
+      <div class="menu-item-desc">Ručně sekaný, kapary, hořčice, opečený toast na grilu</div>
+      <div class="menu-item-price">285 Kč</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-name">Risotto s liškami</div>
+      <div class="menu-item-desc">Čerstvé lišky, lanýžový olej, parmazán, bílé víno</div>
+      <div class="menu-item-price">325 Kč</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-name">Piknikový koš</div>
+      <div class="menu-item-desc">Sýry, uzeniny, hrozny, kváskový chléb a láhev vína</div>
+      <div class="menu-item-price">890 Kč</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-name">Český candát</div>
+      <div class="menu-item-desc">Na grilu, s citronovým máslem, chřestem a bramborovým pyré</div>
+      <div class="menu-item-price">355 Kč</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-name">Jahodová pavlova</div>
+      <div class="menu-item-desc">Pusinky, mascarpone, čerstvé jahody, bazalkové coulis</div>
+      <div class="menu-item-price">175 Kč</div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:40px;">
+    <a href="menu.pdf" style="font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--bronze); text-decoration:none; border-bottom: 0.5px solid var(--bronze); padding-bottom:3px;">Celé menu (PDF)</a>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider" style="padding: 48px 48px 0;">
+  <div class="divider-line"></div>
+  <div class="divider-ornament">✦</div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="section-heading">
+    <span class="label">Atmosféra</span>
+    <h2>Naše <em style="font-style:italic; color:var(--gold);">prostory</em></h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <div class="gallery-placeholder" style="background: linear-gradient(160deg, #1A160C 0%, #2E240E 40%, #1A1208 100%);">
+        <!-- Simulated panorama view -->
+        <svg width="100%" height="100%" viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice">
+          <!-- Sky -->
+          <rect width="300" height="200" fill="#1A1208"/>
+          <!-- Horizon glow -->
+          <ellipse cx="150" cy="200" rx="200" ry="60" fill="#B8853A" opacity="0.15"/>
+          <!-- Prague silhouette -->
+          <path d="M0 400 L0 250 L20 250 L20 235 L30 225 L30 210 L35 200 L40 210 L40 235 L60 235 L60 245 L80 245 L80 230 L90 218 L95 205 L100 218 L100 230 L120 230 L120 240 L140 240 L140 228 L150 215 L150 200 L153 192 L156 200 L156 215 L156 228 L180 228 L180 238 L200 238 L200 225 L210 215 L215 205 L220 215 L220 225 L240 225 L240 238 L260 238 L260 248 L280 248 L280 258 L300 258 L300 400 Z" fill="#2A2010" opacity="0.8"/>
+          <!-- Stars -->
+          <circle cx="50" cy="60" r="1" fill="#E2B96A" opacity="0.6"/>
+          <circle cx="120" cy="40" r="1.2" fill="#E2B96A" opacity="0.5"/>
+          <circle cx="200" cy="80" r="0.8" fill="#E2B96A" opacity="0.7"/>
+          <circle cx="250" cy="30" r="1" fill="#E2B96A" opacity="0.4"/>
+          <circle cx="80" cy="100" r="0.8" fill="#E2B96A" opacity="0.5"/>
+          <circle cx="170" cy="55" r="1.2" fill="#F0E8D5" opacity="0.3"/>
+        </svg>
+        <div class="photo-label">Výhled z terasy</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder" style="background: linear-gradient(135deg, #1A1E16 0%, #222B1C 100%);">
+        <svg width="100%" height="100%" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice">
+          <rect width="200" height="200" fill="#1A1E16"/>
+          <!-- Table setting illustration -->
+          <ellipse cx="100" cy="130" rx="70" ry="30" fill="#2A2416" stroke="#B8853A" stroke-width="0.5"/>
+          <rect x="85" y="80" width="4" height="60" rx="2" fill="#B8853A" opacity="0.6"/>
+          <circle cx="87" cy="75" r="8" fill="#E2B96A" opacity="0.4"/>
+          <rect x="111" y="80" width="4" height="60" rx="2" fill="#B8853A" opacity="0.6"/>
+          <circle cx="113" cy="75" r="8" fill="#E2B96A" opacity="0.4"/>
+          <ellipse cx="100" cy="115" rx="18" ry="9" fill="none" stroke="#9A8F7A" stroke-width="0.5"/>
+          <ellipse cx="100" cy="145" rx="18" ry="9" fill="none" stroke="#9A8F7A" stroke-width="0.5"/>
+        </svg>
+        <div class="photo-label">Interiér</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder" style="background: linear-gradient(135deg, #1E1410 0%, #2A1C12 100%);">
+        <svg width="100%" height="100%" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice">
+          <rect width="200" height="200" fill="#1E1410"/>
+          <!-- Wine glass -->
+          <path d="M90 160 L110 160 L105 100 C105 80 120 60 120 40 L80 40 C80 60 95 80 95 100 Z" fill="none" stroke="#B8853A" stroke-width="0.8"/>
+          <ellipse cx="100" cy="160" rx="16" ry="4" fill="#B8853A" opacity="0.3"/>
+          <path d="M82 68 C82 68 100 85 118 68" fill="none" stroke="#E2B96A" stroke-width="0.5" opacity="0.6"/>
+        </svg>
+        <div class="photo-label">Vinný lístek</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder" style="background: linear-gradient(135deg, #12161E 0%, #1A2028 100%);">
+        <svg width="100%" height="100%" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice">
+          <rect width="200" height="200" fill="#12161E"/>
+          <!-- Pavilion architecture hint -->
+          <path d="M60 160 L60 80 L100 50 L140 80 L140 160 Z" fill="none" stroke="#B8853A" stroke-width="0.5" opacity="0.6"/>
+          <path d="M50 85 L100 48 L150 85" fill="none" stroke="#E2B96A" stroke-width="0.8" opacity="0.4"/>
+          <rect x="85" y="110" width="30" height="50" fill="none" stroke="#9A8F7A" stroke-width="0.5" opacity="0.5"/>
+          <circle cx="100" cy="70" r="8" fill="none" stroke="#B8853A" stroke-width="0.5" opacity="0.5"/>
+        </svg>
+        <div class="photo-label">Architektura 1891</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder" style="background: linear-gradient(135deg, #1E1A14 0%, #2C2018 100%);">
+        <svg width="100%" height="100%" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice">
+          <rect width="200" height="200" fill="#1E1A14"/>
+          <!-- Plate / food -->
+          <circle cx="100" cy="100" r="60" fill="none" stroke="#B8853A" stroke-width="0.5" opacity="0.4"/>
+          <circle cx="100" cy="100" r="50" fill="#2A2010"/>
+          <ellipse cx="100" cy="95" rx="25" ry="15" fill="#3A2C16" opacity="0.8"/>
+          <circle cx="92" cy="90" r="6" fill="#B8853A" opacity="0.5"/>
+          <circle cx="108" cy="102" r="4" fill="#9A8F7A" opacity="0.4"/>
+        </svg>
+        <div class="photo-label">Sezónní pokrmy</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVATION -->
+<section class="reservation" id="reservation">
+  <div class="about-label" style="text-align:center; margin-bottom:16px;">Stůl pro dva nebo pro skupinu</div>
+  <h2>Rezervujte <em>večer</em></h2>
+  <p class="reservation-sub">Po–Ne · 11:00 – 21:00 · Letenské sady 173, Praha 7</p>
+  <div class="reservation-form">
+    <input class="res-input" type="tel" placeholder="Vaše telefonní číslo" autocomplete="tel" pattern="[+]?[0-9\s\-]{7,20}" title="Zadejte platné telefonní číslo">
+    <button class="res-btn" type="button">Zavolat nám</button>
+  </div>
+  <p class="reservation-phone">
+    Nebo napište přímo: <a href="mailto:info@hanavsky-pavilon.cz">info@hanavsky-pavilon.cz</a>
+    &nbsp;·&nbsp;
+    <a href="tel:+420725944889">+420 725 944 889</a>
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-logo">Hanavský Pavilon · 1891</div>
+  <div class="footer-links">
+    <a href="https://www.facebook.com/HanavskýPavilon" target="_blank" rel="noopener noreferrer">Facebook</a>
+    <a href="https://www.instagram.com/hanavsky_pavilon/" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <a href="https://www.google.com/maps/search/Hanavský+Pavilon+Praha" target="_blank" rel="noopener noreferrer">Google Maps</a>
+  </div>
+  <div class="footer-copy">© 2025 Hanavský Pavilon</div>
+</footer>
+
+<!-- HOURS BADGE -->
+<div class="hours-badge">
+  <strong>Dnes otevřeno</strong>
+  11:00 – 21:00
+</div>
+
+<script>
+  const wm  = document.querySelector('.year-watermark');
+  const nav = document.querySelector('nav');
+
+  // Единый scroll-listener вместо двух отдельных
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (wm) wm.style.transform = `translate(-50%, calc(-50% + ${y * 0.15}px))`;
+    if (y > 60) {
+      nav.style.background   = 'rgba(18,14,7,0.97)';
+      nav.style.borderBottom = '0.5px solid rgba(184,133,58,0.15)';
+    } else {
+      nav.style.background   = '';
+      nav.style.borderBottom = '';
+    }
+  }, { passive: true });
+
+  // Hamburger — с обновлением aria-expanded для screen reader'ов
+  const hamburger  = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  function closeMobileMenu() {
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
+  });
+
+  // Закрыть меню при нажатии Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+      closeMobileMenu();
+      hamburger.focus();
+    }
+  });
+</script>
+</body>
+</html>
